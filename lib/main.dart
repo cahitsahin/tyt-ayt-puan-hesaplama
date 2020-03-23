@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puan_hesaplama/pages/tyt_page.dart';
 
-import 'homepage.dart';
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {

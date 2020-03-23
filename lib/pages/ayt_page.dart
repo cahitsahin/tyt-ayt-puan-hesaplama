@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:puan_hesaplama/animations/fadeanimation.dart';
 import 'package:puan_hesaplama/models/lessons.dart';
-import 'package:puan_hesaplama/pages/calculationpage.dart';
-import 'package:puan_hesaplama/pages/stats.dart';
-import 'package:puan_hesaplama/services/appdrawer.dart';
+import 'package:puan_hesaplama/pages/result_page.dart';
 import 'package:puan_hesaplama/services/divider.dart';
-import 'package:puan_hesaplama/pages/tyt_page.dart';
 
 class AytPage extends StatefulWidget {
   final List<Lesson> tytLesson;
@@ -126,7 +122,7 @@ class _TytPageState extends State<AytPage> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 24, left: 24),
-                    child: FadeAnimation(1.4,Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Expanded(
@@ -171,11 +167,15 @@ class _TytPageState extends State<AytPage> {
                                         aytLessons[index].falseControl.text);
                                     max = aytLessons[index].numOfQuestion -
                                         falseQ;
-                                    debugPrint("$max");
                                   }
 
                                   if (int.parse(input) > max) {
                                     aytLessons[index].trueControl.text = "$max";
+                                  }
+
+                                  if (input != "") {
+                                    aytLessons[index].trueAnswers = int.parse(
+                                        aytLessons[index].trueControl.text);
                                   }
                                 },
                                 controller: aytLessons[index].trueControl,
@@ -215,6 +215,11 @@ class _TytPageState extends State<AytPage> {
                                 if (int.parse(input) > max) {
                                   aytLessons[index].falseControl.text = "$max";
                                 }
+
+                                if (input != "") {
+                                  aytLessons[index].trueAnswers = int.parse(
+                                      aytLessons[index].trueControl.text);
+                                }
                               },
                               controller: aytLessons[index].falseControl,
                               keyboardType: TextInputType.number,
@@ -238,7 +243,7 @@ class _TytPageState extends State<AytPage> {
                           ),
                         ),
                       ],
-                    )),
+                    ),
                   );
                 },
               ),
@@ -287,7 +292,6 @@ class _TytPageState extends State<AytPage> {
                   Expanded(
                     child: RaisedButton(
                       onPressed: () {
-                        formKey.currentState.save();
                         Navigator.push(
                           context,
                           MaterialPageRoute(

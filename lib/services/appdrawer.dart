@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puan_hesaplama/pages/ayt_page.dart';
-import 'package:puan_hesaplama/pages/stats.dart';
+import 'package:puan_hesaplama/pages/stats_page.dart';
 import 'package:puan_hesaplama/pages/tyt_page.dart';
 
 class AppDrawer extends StatelessWidget {

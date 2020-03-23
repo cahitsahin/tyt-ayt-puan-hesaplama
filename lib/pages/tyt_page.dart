@@ -72,7 +72,10 @@ class _TytPageState extends State<TytPage> {
               controller: certGrade,
               keyboardType: TextInputType.number,
               onChanged: (input){
-                grade = int.parse(input);
+                if(int.parse(input)>100){
+                  certGrade.text = "100";
+                }
+                grade = int.parse(certGrade.text);
               },
               inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
               decoration: new InputDecoration(
@@ -275,7 +278,7 @@ class _TytPageState extends State<TytPage> {
                           grade = 0;
                         }
 
-                        
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
