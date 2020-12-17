@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puan_hesaplama/pages/ayt_page.dart';
+import 'package:puan_hesaplama/pages/stats_chart.dart';
 import 'package:puan_hesaplama/pages/stats_page.dart';
 import 'package:puan_hesaplama/pages/tyt_page.dart';
 
@@ -42,6 +43,15 @@ class AppDrawer extends StatelessWidget {
             _createDrawerItem(
               icon: Icons.sentiment_very_satisfied,
               text: 'Oy Ver',
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChartPage(
+                      ),
+                    ),
+                  );
+                }
             ),
             _createDrawerItem(icon: Icons.get_app, text: 'Uygulamalarımız'),
           ],

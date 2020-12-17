@@ -49,8 +49,7 @@ class _CalculationPageState extends State<CalculationPage> {
           FadeAnimation(
             1.4,
             Card(
-              margin:
-              EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 36),
+              margin: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 36),
               color: Colors.pink[200],
               elevation: 20,
               child: FutureBuilder(
@@ -392,7 +391,6 @@ class _CalculationPageState extends State<CalculationPage> {
                     );
                   }
                 },
-
               ),
             ),),
           FadeAnimation(
@@ -443,16 +441,6 @@ class _CalculationPageState extends State<CalculationPage> {
       ),
     );
   }
-  _add(Exam exam){
-    databaseHelper.addExam(exam);
-  }
-
-  _print() async {
-    var allS = await databaseHelper.getExams();
-    debugPrint(allS.toString());
-  }
-
-
 
   Future<List<double>> calculateAytTyt() async{
     List<Lesson> tytLesson = widget.tytLesson;
