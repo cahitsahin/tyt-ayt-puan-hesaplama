@@ -14,7 +14,6 @@ class TytPage extends StatefulWidget {
 class _TytPageState extends State<TytPage> {
   List<Lesson> lessons;
   TextEditingController certGrade = TextEditingController();
-
   TextEditingController turTrue = TextEditingController();
   TextEditingController turFalse = TextEditingController();
   TextEditingController matTrue = TextEditingController();
@@ -164,14 +163,10 @@ class _TytPageState extends State<TytPage> {
                                                     .text);
                                             max = lessons[index].numOfQuestion -
                                                 falseQ;
-                                            debugPrint("$max");
                                           }
-
                                           if (int.parse(input) > max) {
-                                            setState(() {
-                                              lessons[index].trueControl.text =
-                                                  "$max";
-                                            });
+                                            lessons[index].trueControl.text =
+                                                "$max";
                                           }
                                           if (input != "") {
                                             lessons[index].trueAnswers =
@@ -212,10 +207,8 @@ class _TytPageState extends State<TytPage> {
                                               trueQ;
                                         }
                                         if (int.parse(input) > max) {
-                                          setState(() {
-                                            lessons[index].falseControl.text =
-                                                max.toString();
-                                          });
+                                          lessons[index].falseControl.text =
+                                              max.toString();
                                         }
                                         if (input != "") {
                                           lessons[index].falseAnswers =

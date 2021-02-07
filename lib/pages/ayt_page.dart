@@ -10,7 +10,7 @@ class AytPage extends StatefulWidget {
   final bool isPassBefore;
   final int grade;
 
-  AytPage(this.tytLesson, this.isPassBefore,this.grade);
+  AytPage(this.tytLesson, this.isPassBefore, this.grade);
 
   @override
   _TytPageState createState() => _TytPageState();
@@ -89,31 +89,29 @@ class _TytPageState extends State<AytPage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     List<Lesson> tytLesson = widget.tytLesson;
     bool isPassBefore = widget.isPassBefore;
     int grade = widget.grade;
 
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF4A4A58),
         title: Center(
             child: Text(
-              "Ayt -Tyt Puan Hesaplama",
-              style: TextStyle(fontWeight: FontWeight.w900),
-            )),
+          "Ayt -Tyt Puan Hesaplama",
+          style: TextStyle(fontWeight: FontWeight.w900),
+        )),
       ),
       body: Column(
         children: <Widget>[
-          FadeAnimation(1.4,Padding(
+          Padding(
             padding: const EdgeInsets.only(left: 32, right: 16, top: 0),
-            child: FadeAnimation(1.4,CustomDivider(
+            child: CustomDivider(
               dividerText: "AYT",
             ),
-          ))),
+          ),
           Expanded(
             child: Form(
               key: formKey,
@@ -186,10 +184,10 @@ class _TytPageState extends State<AytPage> {
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                         borderSide:
-                                        BorderSide(color: Colors.teal)),
+                                            BorderSide(color: Colors.teal)),
                                     labelText: 'Doğru',
                                     suffixStyle:
-                                    TextStyle(color: Colors.green)),
+                                        TextStyle(color: Colors.green)),
                                 onSaved: (input) {
                                   if (input != "") {
                                     aytLessons[index].trueAnswers = int.parse(
@@ -230,7 +228,7 @@ class _TytPageState extends State<AytPage> {
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                       borderSide:
-                                      BorderSide(color: Colors.teal)),
+                                          BorderSide(color: Colors.teal)),
                                   labelText: 'Yanlış',
                                   suffixStyle: TextStyle(color: Colors.green)),
                               onSaved: (input) {
@@ -252,13 +250,12 @@ class _TytPageState extends State<AytPage> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(left: 24, right: 16,bottom: 5,top: 5),
+              padding: EdgeInsets.only(left: 24, right: 16, bottom: 5, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Expanded(
                     child: RaisedButton(
-
                       onPressed: () {
                         for (int i = 0; i < aytLessons.length; i++) {
                           aytLessons[i].trueControl.text = "";
@@ -266,8 +263,7 @@ class _TytPageState extends State<AytPage> {
                         }
                       },
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)
-                      ),
+                          borderRadius: BorderRadius.circular(20)),
                       elevation: 20,
                       child: Container(
                         height: 50,
@@ -275,7 +271,11 @@ class _TytPageState extends State<AytPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text('Temizle!', style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Colors.pink[300])),
+                            Text('Temizle!',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.pink[300])),
                             Icon(
                               Icons.delete,
                               color: Colors.pink[300],
@@ -295,20 +295,24 @@ class _TytPageState extends State<AytPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CalculationPage(tytLesson,aytLessons,grade,isPassBefore),
+                            builder: (context) => CalculationPage(
+                                tytLesson, aytLessons, grade, isPassBefore),
                           ),
                         );
                       },
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)
-                      ),
+                          borderRadius: BorderRadius.circular(20)),
                       child: Container(
                         height: 50,
                         padding: EdgeInsets.only(bottom: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text('Hesapla', style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,)),
+                            Text('Hesapla',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                )),
                             Icon(
                               Icons.cached,
                               size: 25,
