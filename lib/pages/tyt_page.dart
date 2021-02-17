@@ -168,12 +168,7 @@ class _TytPageState extends State<TytPage> {
                                             lessons[index].trueControl.text =
                                                 "$max";
                                           }
-                                          if (input != "") {
-                                            lessons[index].trueAnswers =
-                                                int.parse(lessons[index]
-                                                    .trueControl
-                                                    .text);
-                                          }
+
                                         },
                                         controller: lessons[index].trueControl,
                                         keyboardType: TextInputType.number,
@@ -210,12 +205,7 @@ class _TytPageState extends State<TytPage> {
                                           lessons[index].falseControl.text =
                                               max.toString();
                                         }
-                                        if (input != "") {
-                                          lessons[index].falseAnswers =
-                                              int.parse(lessons[index]
-                                                  .falseControl
-                                                  .text);
-                                        }
+
                                       },
                                       controller: lessons[index].falseControl,
                                       keyboardType: TextInputType.number,
@@ -291,6 +281,24 @@ class _TytPageState extends State<TytPage> {
                         onPressed: () {
                           if (grade == null) {
                             grade = 0;
+                          }
+                          for(int i=0;i<lessons.length;i++){
+                            if (lessons[i]
+                                .trueControl
+                                .text != "") {
+                              lessons[i].trueAnswers =
+                                  int.parse(lessons[i]
+                                      .trueControl
+                                      .text);
+                            }
+                            if (lessons[i]
+                                .falseControl
+                                .text != "") {
+                              lessons[i].falseAnswers =
+                                  int.parse(lessons[i]
+                                      .falseControl
+                                      .text);
+                            }
                           }
                           Navigator.push(
                             context,

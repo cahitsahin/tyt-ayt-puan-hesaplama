@@ -43,8 +43,6 @@ class _TytPageState extends State<AytPage> {
       dilTrue,
       dilFalse;
 
-  var formKey = GlobalKey<FormState>();
-
   @override
   void initState() {
     super.initState();
@@ -91,6 +89,7 @@ class _TytPageState extends State<AytPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     List<Lesson> tytLesson = widget.tytLesson;
     bool isPassBefore = widget.isPassBefore;
     int grade = widget.grade;
@@ -104,232 +103,267 @@ class _TytPageState extends State<AytPage> {
           style: TextStyle(fontWeight: FontWeight.w900),
         )),
       ),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 32, right: 16, top: 0),
-            child: CustomDivider(
-              dividerText: "AYT",
-            ),
-          ),
-          Expanded(
-            child: Form(
-              key: formKey,
-              child: ListView.builder(
-                itemCount: aytLessons.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 24, left: 24),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            padding: EdgeInsets.only(bottom: 8, top: 20),
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  aytLessons[index].name,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 16.0),
-                                ),
-                                Text(
-                                  " (" +
-                                      aytLessons[index]
-                                          .numOfQuestion
-                                          .toString() +
-                                      ")",
-                                  style: TextStyle(
-                                      fontSize: 16.0, color: Colors.grey),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: EdgeInsets.only(right: 8.0),
-                            child: Container(
-                              padding: EdgeInsets.only(bottom: 8, top: 20),
-                              child: TextFormField(
-                                onChanged: (input) {
-                                  int max = aytLessons[index].numOfQuestion;
-                                  if (aytLessons[index].falseControl.text !=
-                                      "") {
-                                    debugPrint(
-                                        aytLessons[index].falseControl.text);
-                                    int falseQ = int.parse(
-                                        aytLessons[index].falseControl.text);
-                                    max = aytLessons[index].numOfQuestion -
-                                        falseQ;
-                                  }
-
-                                  if (int.parse(input) > max) {
-                                    aytLessons[index].trueControl.text = "$max";
-                                  }
-
-                                  if (input != "") {
-                                    aytLessons[index].trueAnswers = int.parse(
-                                        aytLessons[index].trueControl.text);
-                                  }
-                                },
-                                controller: aytLessons[index].trueControl,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  WhitelistingTextInputFormatter.digitsOnly
-                                ],
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.teal)),
-                                    labelText: 'Doğru',
-                                    suffixStyle:
-                                        TextStyle(color: Colors.green)),
-                                onSaved: (input) {
-                                  if (input != "") {
-                                    aytLessons[index].trueAnswers = int.parse(
-                                        aytLessons[index].trueControl.text);
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            padding: EdgeInsets.only(bottom: 8, top: 20),
-                            child: TextFormField(
-                              onChanged: (input) {
-                                int max = aytLessons[index].numOfQuestion;
-                                if (aytLessons[index].trueControl.text != "") {
-                                  int trueQ = int.parse(
-                                      aytLessons[index].trueControl.text);
-                                  max = aytLessons[index].numOfQuestion - trueQ;
-                                }
-                                if (int.parse(input) > max) {
-                                  aytLessons[index].falseControl.text = "$max";
-                                }
-
-                                if (input != "") {
-                                  aytLessons[index].trueAnswers = int.parse(
-                                      aytLessons[index].trueControl.text);
-                                }
-                              },
-                              controller: aytLessons[index].falseControl,
-                              keyboardType: TextInputType.number,
-                              style: TextStyle(fontSize: 16),
-                              inputFormatters: [
-                                WhitelistingTextInputFormatter.digitsOnly
-                              ],
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.teal)),
-                                  labelText: 'Yanlış',
-                                  suffixStyle: TextStyle(color: Colors.green)),
-                              onSaved: (input) {
-                                if (input != "") {
-                                  aytLessons[index].falseAnswers = int.parse(
-                                      aytLessons[index].falseControl.text);
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
+      body: FadeAnimation(
+        1.4,
+        Stack(
+          children: [
+            SingleChildScrollView(
+              child: Container(
+                height: screenHeight * 2,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 32, right: 16, top: 0),
+                      child: CustomDivider(
+                        dividerText: "AYT",
+                      ),
                     ),
-                  );
-                },
+                    Expanded(
+                      child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: aytLessons.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 24, left: 24),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.only(bottom: 8, top: 20),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          aytLessons[index].name,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 16.0),
+                                        ),
+                                        Text(
+                                          " (" +
+                                              aytLessons[index]
+                                                  .numOfQuestion
+                                                  .toString() +
+                                              ")",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.grey),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: 8.0),
+                                    child: Container(
+                                      padding:
+                                          EdgeInsets.only(bottom: 8, top: 20),
+                                      child: TextField(
+                                        onChanged: (input) {
+                                          int max =
+                                              aytLessons[index].numOfQuestion;
+                                          if (aytLessons[index]
+                                                  .falseControl
+                                                  .text !=
+                                              "") {
+                                            debugPrint(aytLessons[index]
+                                                .falseControl
+                                                .text);
+                                            int falseQ = int.parse(
+                                                aytLessons[index]
+                                                    .falseControl
+                                                    .text);
+                                            max = aytLessons[index]
+                                                    .numOfQuestion -
+                                                falseQ;
+                                          }
+
+                                          if (int.parse(input) > max) {
+                                            aytLessons[index].trueControl.text =
+                                                "$max";
+                                          }
+
+                                        },
+                                        controller:
+                                            aytLessons[index].trueControl,
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.teal)),
+                                            labelText: 'Doğru',
+                                            suffixStyle:
+                                                TextStyle(color: Colors.green)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.only(bottom: 8, top: 20),
+                                    child: TextField(
+                                      onChanged: (input) {
+                                        int max =
+                                            aytLessons[index].numOfQuestion;
+                                        if (aytLessons[index]
+                                                .trueControl
+                                                .text !=
+                                            "") {
+                                          int trueQ = int.parse(
+                                              aytLessons[index]
+                                                  .trueControl
+                                                  .text);
+                                          max =
+                                              aytLessons[index].numOfQuestion -
+                                                  trueQ;
+                                        }
+                                        if (int.parse(input) > max) {
+                                          aytLessons[index].falseControl.text =
+                                              "$max";
+                                        }
+
+                                      },
+                                      controller:
+                                          aytLessons[index].falseControl,
+                                      keyboardType: TextInputType.number,
+                                      style: TextStyle(fontSize: 16),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.teal)),
+                                          labelText: 'Yanlış',
+                                          suffixStyle:
+                                              TextStyle(color: Colors.green)),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(left: 24, right: 16, bottom: 5, top: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: RaisedButton(
-                      onPressed: () {
-                        for (int i = 0; i < aytLessons.length; i++) {
-                          aytLessons[i].trueControl.text = "";
-                          aytLessons[i].falseControl.text = "";
-                        }
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      elevation: 20,
-                      child: Container(
-                        height: 50,
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text('Temizle!',
-                                style: TextStyle(
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding:
+                    EdgeInsets.only(left: 24, right: 16, bottom: 5, top: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Expanded(
+                      child: RaisedButton(
+                        onPressed: () {
+                          for (int i = 0; i < aytLessons.length; i++) {
+                            aytLessons[i].trueControl.text = "";
+                            aytLessons[i].falseControl.text = "";
+                          }
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        elevation: 20,
+                        child: Container(
+                          height: 50,
+                          padding: EdgeInsets.only(bottom: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text('Temizle!',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.pink[300])),
+                              Icon(
+                                Icons.delete,
+                                color: Colors.pink[300],
+                                size: 25,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: RaisedButton(
+                        onPressed: () {
+                          for(int i=0;i<aytLessons.length;i++){
+                            if (aytLessons[i]
+                                .trueControl
+                                .text != "") {
+                              aytLessons[i].trueAnswers =
+                                  int.parse(aytLessons[i]
+                                      .trueControl
+                                      .text);
+                            }
+                            if (aytLessons[i]
+                                .falseControl
+                                .text != "") {
+                              aytLessons[i].falseAnswers =
+                                  int.parse(aytLessons[i]
+                                      .falseControl
+                                      .text);
+                            }
+                          }
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CalculationPage(
+                                  tytLesson, aytLessons, grade, isPassBefore),
+                            ),
+                          );
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Container(
+                          height: 50,
+                          padding: EdgeInsets.only(bottom: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text('Hesapla',
+                                  style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w700,
-                                    color: Colors.pink[300])),
-                            Icon(
-                              Icons.delete,
-                              color: Colors.pink[300],
-                              size: 25,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CalculationPage(
-                                tytLesson, aytLessons, grade, isPassBefore),
+                                  )),
+                              Icon(
+                                Icons.cached,
+                                size: 25,
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Container(
-                        height: 50,
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text('Hesapla',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                )),
-                            Icon(
-                              Icons.cached,
-                              size: 25,
-                            ),
-                          ],
                         ),
+                        color: Colors.pink[300],
+                        textColor: Colors.white,
+                        elevation: 20,
                       ),
-                      color: Colors.pink[300],
-                      textColor: Colors.white,
-                      elevation: 20,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
