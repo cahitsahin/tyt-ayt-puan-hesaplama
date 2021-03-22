@@ -50,7 +50,7 @@ class _CalculationPageState extends State<CalculationPage> {
             1.4,
             Card(
               margin: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 36),
-              color: Colors.pink[200],
+              color: Colors.amber,
               elevation: 20,
               child: FutureBuilder(
                 future: calculateAytTyt(),
@@ -431,7 +431,7 @@ class _CalculationPageState extends State<CalculationPage> {
                     ],
                   ),
                 ),
-                color: Colors.pink[300],
+                color: Colors.amber[400],
                 textColor: Colors.white,
                 elevation: 20,
               ),

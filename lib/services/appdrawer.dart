@@ -67,7 +67,7 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           ListTile(
             title: Text(
-              "Ayt-Tyt",
+              "YKS",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
@@ -81,7 +81,7 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             leading: CircleAvatar(
-              backgroundColor: Colors.pink[400],
+              backgroundColor: Colors.amber,
               child: Icon(
                 Icons.perm_identity,
                 color: Colors.white,
@@ -112,7 +112,7 @@ class AppDrawer extends StatelessWidget {
           children: <Widget>[
             Icon(
               icon,
-              color: Colors.white,
+              color: Colors.amber,
               size: 35,
             ),
             SizedBox(

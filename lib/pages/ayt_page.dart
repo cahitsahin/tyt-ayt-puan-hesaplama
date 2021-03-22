@@ -97,11 +97,59 @@ class _TytPageState extends State<AytPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF4A4A58),
-        title: Center(
-            child: Text(
+        title: Text(
           "Ayt -Tyt Puan Hesaplama",
           style: TextStyle(fontWeight: FontWeight.w900),
-        )),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          goCalculation();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  CalculationPage(tytLesson, aytLessons, grade, isPassBefore),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.calculate_sharp,
+          color: Color(0xFF4A4A58),
+        ),
+        backgroundColor: Colors.amber,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      bottomNavigationBar: BottomAppBar(
+        color: Color(0xFF4A4A58),
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            FlatButton(
+              onPressed: () {
+                for (int i = 0; i < aytLessons.length; i++) {
+                  aytLessons[i].trueControl.text = "";
+                  aytLessons[i].falseControl.text = "";
+                }
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      Icons.delete_sweep,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
       body: FadeAnimation(
         1.4,
@@ -187,7 +235,6 @@ class _TytPageState extends State<AytPage> {
                                             aytLessons[index].trueControl.text =
                                                 "$max";
                                           }
-
                                         },
                                         controller:
                                             aytLessons[index].trueControl,
@@ -231,7 +278,6 @@ class _TytPageState extends State<AytPage> {
                                           aytLessons[index].falseControl.text =
                                               "$max";
                                         }
-
                                       },
                                       controller:
                                           aytLessons[index].falseControl,
@@ -260,111 +306,122 @@ class _TytPageState extends State<AytPage> {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding:
-                    EdgeInsets.only(left: 24, right: 16, bottom: 5, top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                      child: RaisedButton(
-                        onPressed: () {
-                          for (int i = 0; i < aytLessons.length; i++) {
-                            aytLessons[i].trueControl.text = "";
-                            aytLessons[i].falseControl.text = "";
-                          }
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        elevation: 20,
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text('Temizle!',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.pink[300])),
-                              Icon(
-                                Icons.delete,
-                                color: Colors.pink[300],
-                                size: 25,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: RaisedButton(
-                        onPressed: () {
-                          for(int i=0;i<aytLessons.length;i++){
-                            if (aytLessons[i]
-                                .trueControl
-                                .text != "") {
-                              aytLessons[i].trueAnswers =
-                                  int.parse(aytLessons[i]
-                                      .trueControl
-                                      .text);
-                            }
-                            if (aytLessons[i]
-                                .falseControl
-                                .text != "") {
-                              aytLessons[i].falseAnswers =
-                                  int.parse(aytLessons[i]
-                                      .falseControl
-                                      .text);
-                            }
-                          }
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CalculationPage(
-                                  tytLesson, aytLessons, grade, isPassBefore),
-                            ),
-                          );
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text('Hesapla',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  )),
-                              Icon(
-                                Icons.cached,
-                                size: 25,
-                              ),
-                            ],
-                          ),
-                        ),
-                        color: Colors.pink[300],
-                        textColor: Colors.white,
-                        elevation: 20,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+//            Align(
+//              alignment: Alignment.bottomCenter,
+//              child: Padding(
+//                padding:
+//                    EdgeInsets.only(left: 24, right: 16, bottom: 5, top: 5),
+//                child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                  children: <Widget>[
+//                    Expanded(
+//                      child: RaisedButton(
+//                        onPressed: () {
+//                          for (int i = 0; i < aytLessons.length; i++) {
+//                            aytLessons[i].trueControl.text = "";
+//                            aytLessons[i].falseControl.text = "";
+//                          }
+//                        },
+//                        shape: RoundedRectangleBorder(
+//                            borderRadius: BorderRadius.circular(20)),
+//                        elevation: 20,
+//                        child: Container(
+//                          height: 50,
+//                          padding: EdgeInsets.only(bottom: 5),
+//                          child: Row(
+//                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                            children: <Widget>[
+//                              Text('Temizle!',
+//                                  style: TextStyle(
+//                                      fontSize: 20,
+//                                      fontWeight: FontWeight.w700,
+//                                      color: Colors.pink[300])),
+//                              Icon(
+//                                Icons.delete,
+//                                color: Colors.pink[300],
+//                                size: 25,
+//                              ),
+//                            ],
+//                          ),
+//                        ),
+//                      ),
+//                    ),
+//                    SizedBox(
+//                      width: 20,
+//                    ),
+//                    Expanded(
+//                      child: RaisedButton(
+//                        onPressed: () {
+//                          for(int i=0;i<aytLessons.length;i++){
+//                            if (aytLessons[i]
+//                                .trueControl
+//                                .text != "") {
+//                              aytLessons[i].trueAnswers =
+//                                  int.parse(aytLessons[i]
+//                                      .trueControl
+//                                      .text);
+//                            }
+//                            if (aytLessons[i]
+//                                .falseControl
+//                                .text != "") {
+//                              aytLessons[i].falseAnswers =
+//                                  int.parse(aytLessons[i]
+//                                      .falseControl
+//                                      .text);
+//                            }
+//                          }
+//
+//                          Navigator.push(
+//                            context,
+//                            MaterialPageRoute(
+//                              builder: (context) => CalculationPage(
+//                                  tytLesson, aytLessons, grade, isPassBefore),
+//                            ),
+//                          );
+//                        },
+//                        shape: RoundedRectangleBorder(
+//                            borderRadius: BorderRadius.circular(20)),
+//                        child: Container(
+//                          height: 50,
+//                          padding: EdgeInsets.only(bottom: 5),
+//                          child: Row(
+//                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                            children: <Widget>[
+//                              Text('Hesapla',
+//                                  style: TextStyle(
+//                                    fontSize: 20,
+//                                    fontWeight: FontWeight.w700,
+//                                  )),
+//                              Icon(
+//                                Icons.cached,
+//                                size: 25,
+//                              ),
+//                            ],
+//                          ),
+//                        ),
+//                        color: Colors.pink[300],
+//                        textColor: Colors.white,
+//                        elevation: 20,
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//              ),
+//            ),
           ],
         ),
       ),
     );
+  }
+
+  void goCalculation() {
+    for (int i = 0; i < aytLessons.length; i++) {
+      if (aytLessons[i].trueControl.text != "") {
+        aytLessons[i].trueAnswers = int.parse(aytLessons[i].trueControl.text);
+      }
+      if (aytLessons[i].falseControl.text != "") {
+        aytLessons[i].falseAnswers = int.parse(aytLessons[i].falseControl.text);
+      }
+    }
   }
 }

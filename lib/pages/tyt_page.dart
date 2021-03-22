@@ -38,14 +38,57 @@ class _TytPageState extends State<TytPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
     return Scaffold(
       drawer: AppDrawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: goAyt,
+        child: Icon(
+          Icons.arrow_forward_ios,
+          color: Color(0xFF4A4A58),
+        ),
+        backgroundColor: Colors.amber,
+
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       appBar: AppBar(
         backgroundColor: Color(0xFF4A4A58),
         title: Text(
           "Ayt -Tyt Puan Hesaplama",
           style: TextStyle(fontWeight: FontWeight.w900),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color(0xFF4A4A58),
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            FlatButton(
+              onPressed: () {
+                for (int i = 0; i < lessons.length; i++) {
+                  lessons[i].trueControl.text = "";
+                  lessons[i].falseControl.text = "";
+                }
+                certGrade.text = "";
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  CircleAvatar(
+                    backgroundColor:Colors.white,
+                    child: Icon(Icons.delete_sweep,color: Colors.black,),
+                  ),
+
+                ],
+              ),
+            ),
+          ],
         ),
       ),
       body: FadeAnimation(
@@ -54,7 +97,7 @@ class _TytPageState extends State<TytPage> {
           children: [
             SingleChildScrollView(
               child: Container(
-                height: screenHeight,
+                height: screenHeight * 5 / 6,
                 child: Column(
                   children: [
                     Padding(
@@ -116,7 +159,7 @@ class _TytPageState extends State<TytPage> {
                                   flex: 2,
                                   child: Container(
                                     padding:
-                                        EdgeInsets.only(bottom: 8, top: 20),
+                                    EdgeInsets.only(bottom: 8, top: 20),
                                     child: Row(
                                       children: <Widget>[
                                         Text(
@@ -145,14 +188,14 @@ class _TytPageState extends State<TytPage> {
                                     padding: EdgeInsets.only(right: 8.0),
                                     child: Container(
                                       padding:
-                                          EdgeInsets.only(bottom: 8, top: 20),
+                                      EdgeInsets.only(bottom: 8, top: 20),
                                       child: TextField(
                                         onChanged: (input) {
                                           int max =
                                               lessons[index].numOfQuestion;
                                           if (lessons[index]
-                                                  .falseControl
-                                                  .text !=
+                                              .falseControl
+                                              .text !=
                                               "") {
                                             debugPrint(lessons[index]
                                                 .falseControl
@@ -166,9 +209,8 @@ class _TytPageState extends State<TytPage> {
                                           }
                                           if (int.parse(input) > max) {
                                             lessons[index].trueControl.text =
-                                                "$max";
+                                            "$max";
                                           }
-
                                         },
                                         controller: lessons[index].trueControl,
                                         keyboardType: TextInputType.number,
@@ -181,7 +223,7 @@ class _TytPageState extends State<TytPage> {
                                                     color: Colors.teal)),
                                             labelText: 'Doğru',
                                             suffixStyle:
-                                                TextStyle(color: Colors.green)),
+                                            TextStyle(color: Colors.green)),
                                       ),
                                     ),
                                   ),
@@ -190,7 +232,7 @@ class _TytPageState extends State<TytPage> {
                                   flex: 1,
                                   child: Container(
                                     padding:
-                                        EdgeInsets.only(bottom: 8, top: 20),
+                                    EdgeInsets.only(bottom: 8, top: 20),
                                     child: TextField(
                                       onChanged: (input) {
                                         int max = lessons[index].numOfQuestion;
@@ -205,7 +247,6 @@ class _TytPageState extends State<TytPage> {
                                           lessons[index].falseControl.text =
                                               max.toString();
                                         }
-
                                       },
                                       controller: lessons[index].falseControl,
                                       keyboardType: TextInputType.number,
@@ -219,7 +260,7 @@ class _TytPageState extends State<TytPage> {
                                                   color: Colors.teal)),
                                           labelText: 'Yanlış',
                                           suffixStyle:
-                                              TextStyle(color: Colors.green)),
+                                          TextStyle(color: Colors.green)),
                                     ),
                                   ),
                                 ),
@@ -233,113 +274,110 @@ class _TytPageState extends State<TytPage> {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding:
-                    EdgeInsets.only(left: 24, right: 16, bottom: 5, top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                      child: RaisedButton(
-                        onPressed: () {
-                          for (int i = 0; i < lessons.length; i++) {
-                            lessons[i].trueControl.text = "";
-                            lessons[i].falseControl.text = "";
-                          }
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        elevation: 20,
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text('Temizle!',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.pink[300])),
-                              Icon(
-                                Icons.delete,
-                                color: Colors.pink[300],
-                                size: 25,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: RaisedButton(
-                        onPressed: () {
-                          if (grade == null) {
-                            grade = 0;
-                          }
-                          for(int i=0;i<lessons.length;i++){
-                            if (lessons[i]
-                                .trueControl
-                                .text != "") {
-                              lessons[i].trueAnswers =
-                                  int.parse(lessons[i]
-                                      .trueControl
-                                      .text);
-                            }
-                            if (lessons[i]
-                                .falseControl
-                                .text != "") {
-                              lessons[i].falseAnswers =
-                                  int.parse(lessons[i]
-                                      .falseControl
-                                      .text);
-                            }
-                          }
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  AytPage(lessons, isPassBefore, grade),
-                            ),
-                          );
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Container(
-                          height: 50,
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text('AYT',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  )),
-                              Icon(
-                                Icons.forward,
-                                size: 25,
-                              ),
-                            ],
-                          ),
-                        ),
-                        color: Colors.pink[300],
-                        textColor: Colors.white,
-                        elevation: 20,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+//            Align(
+//              alignment: Alignment.bottomCenter,
+//              child: Padding(
+//                padding:
+//                    EdgeInsets.only(left: 24, right: 16, bottom: 5, top: 5),
+//                child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                  children: <Widget>[
+//                    Expanded(
+//                      child: RaisedButton(
+//                        onPressed: () {
+//                          for (int i = 0; i < lessons.length; i++) {
+//                            lessons[i].trueControl.text = "";
+//                            lessons[i].falseControl.text = "";
+//                          }
+//                        },
+//                        shape: RoundedRectangleBorder(
+//                            borderRadius: BorderRadius.circular(20)),
+//                        elevation: 20,
+//                        child: Container(
+//                          height: 50,
+//                          padding: EdgeInsets.only(bottom: 5),
+//                          child: Row(
+//                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                            children: <Widget>[
+//                              Text('Temizle!',
+//                                  style: TextStyle(
+//                                    fontSize: 20,
+//                                    fontWeight: FontWeight.w700,
+//                                  )),
+//                              Icon(
+//                                Icons.delete,
+//                                size: 25,
+//                              ),
+//                            ],
+//                          ),
+//                        ),
+//                      ),
+//                    ),
+//                    SizedBox(
+//                      width: 20,
+//                    ),
+//                    Expanded(
+//                      child: RaisedButton(
+//                        onPressed: () {
+//
+//                        },
+//                        shape: RoundedRectangleBorder(
+//                            borderRadius: BorderRadius.circular(20)),
+//                        child: Container(
+//                          height: 50,
+//                          padding: EdgeInsets.only(bottom: 5),
+//                          child: Row(
+//                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                            children: <Widget>[
+//                              Text('AYT',
+//                                  style: TextStyle(
+//                                    fontSize: 20,
+//                                    fontWeight: FontWeight.w700,
+//                                  )),
+//                              Icon(
+//                                Icons.forward,
+//                                size: 25,
+//                              ),
+//                            ],
+//                          ),
+//                        ),
+//                        color: Color(0xFF4A4A58),
+//                        textColor: Colors.white,
+//                        elevation: 20,
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//              ),
+//            ),
           ],
         ),
       ),
     );
   }
+
+  void goAyt(){
+    if (grade == null) {
+      grade = 0;
+    }
+    for (int i = 0; i < lessons.length; i++) {
+      if (lessons[i].trueControl.text != "") {
+        lessons[i].trueAnswers =
+            int.parse(lessons[i].trueControl.text);
+      }
+      if (lessons[i].falseControl.text != "") {
+        lessons[i].falseAnswers =
+            int.parse(lessons[i].falseControl.text);
+      }
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            AytPage(lessons, isPassBefore, grade),
+      ),
+    );
+
+  }
+
 }
